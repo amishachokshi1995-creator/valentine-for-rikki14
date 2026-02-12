@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* YOUR CLEAN BACKGROUND */
 body {
     margin: 0;
     padding: 0;
@@ -55,6 +54,7 @@ button {
 .heart {
     position: absolute;
     bottom: -10px;
+    font-size: 20px;
     animation: float 6s linear infinite;
 }
 
@@ -100,59 +100,60 @@ button {
 </div>
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
 
-let yesScale = 1;
-const music = document.getElementById("bgMusic");
-const yesBtn = document.getElementById("yesBtn");
-const noBtn = document.getElementById("noBtn");
-const message = document.getElementById("message");
+    let yesScale = 1;
+    const music = document.getElementById("bgMusic");
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const message = document.getElementById("message");
 
-/* Play music on first click */
-document.addEventListener("click", function () {
-    music.play().catch(() => {});
-}, { once: true });
+    // Music on first click
+    document.addEventListener("click", function () {
+        music.play().catch(() => {});
+    }, { once: true });
 
-/* YES */
-yesBtn.addEventListener("click", function () {
-    message.style.display = "block";
-    createConfetti();
-});
+    // YES button
+    yesBtn.addEventListener("click", function () {
+        message.style.display = "block";
+        createConfetti();
+    });
 
-/* NO runs */
-noBtn.addEventListener("mouseover", function () {
-    noBtn.style.position = "absolute";
-    noBtn.style.top = Math.random() * window.innerHeight + "px";
-    noBtn.style.left = Math.random() * window.innerWidth + "px";
+    // NO button runs
+    noBtn.addEventListener("mouseover", function () {
+        noBtn.style.position = "absolute";
+        noBtn.style.top = Math.random() * window.innerHeight + "px";
+        noBtn.style.left = Math.random() * window.innerWidth + "px";
 
-    yesScale += 0.2;
-    yesBtn.style.transform = "scale(" + yesScale + ")";
-});
+        yesScale += 0.2;
+        yesBtn.style.transform = "scale(" + yesScale + ")";
+    });
 
-/* Hearts */
-function createHeart() {
-    const heart = document.createElement("div");
-    heart.classList.add("heart");
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = Math.random() * 20 + 15 + "px";
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
-}
-setInterval(createHeart, 500);
-
-/* Confetti */
-function createConfetti() {
-    for (let i = 0; i < 150; i++) {
-        const confetti = document.createElement("div");
-        confetti.classList.add("confetti");
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.backgroundColor =
-            "hsl(" + Math.random() * 360 + ", 100%, 50%)";
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 3000);
+    // Floating hearts
+    function createHeart() {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
     }
-}
+    setInterval(createHeart, 500);
 
+    // Confetti
+    function createConfetti() {
+        for (let i = 0; i < 150; i++) {
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.left = Math.random() * 100 + "vw";
+            confetti.style.backgroundColor =
+                "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+            document.body.appendChild(confetti);
+            setTimeout(() => confetti.remove(), 3000);
+        }
+    }
+
+});
 </script>
 
 </body>
