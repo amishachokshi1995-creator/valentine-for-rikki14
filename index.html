@@ -1,5 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Happy Valentine's Day Rikki ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-    body {
+/* YOUR CLEAN BACKGROUND */
+body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
@@ -7,44 +15,28 @@
     color: white;
     overflow: hidden;
     background:
-        linear-gradient(rgba(0,0,0,0.8),
+        linear-gradient(rgba(0,0,0,0.08), rgba(0,0,0,0.08)),
         url("couple.jpg") no-repeat center center fixed;
     background-size: cover;
-    }
-/* Dark overlay for text visibility */
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.15); 
+}
 
 .container {
     margin-top: 15%;
-    position: relative;
-    z-index: 1;
-}
-
-h1 {
-    font-size: 2.5em;
 }
 
 button {
     padding: 12px 25px;
-    font-size: 1em;
-    border: none;
     border-radius: 25px;
-    cursor: pointer;
+    border: none;
     margin: 10px;
     font-weight: bold;
+    cursor: pointer;
     transition: 0.3s;
 }
 
 .yes-btn {
     background: white;
     color: #ff4b7d;
-    transform: scale(1);
 }
 
 .no-btn {
@@ -55,11 +47,113 @@ button {
 
 .popup {
     display: none;
-    margin-top: 20px;
     font-size: 1.6em;
-    animation: fadeIn 1.5s ease-in-out;
+    margin-top: 20px;
 }
 
-@keyframes fadeIn {
-    from {opacity: 0;}
+/* Hearts */
+.heart {
+    position: absolute;
+    bottom: -10px;
+    animation: float 6s linear infinite;
+}
 
+@keyframes float {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-100vh); }
+}
+
+/* Confetti */
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: 0;
+    animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+    <h1>Rikki 💖</h1>
+    <h2>Will You Be My Forever Valentine?</h2>
+
+    <button class="yes-btn" id="yesBtn">Yes 💕</button>
+    <button class="no-btn" id="noBtn">No 😜</button>
+
+    <div class="popup" id="message">
+        You are my home, my forever, my always. ❤️
+    </div>
+</div>
+
+<script>
+
+let yesScale = 1;
+const music = document.getElementById("bgMusic");
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const message = document.getElementById("message");
+
+/* Play music on first click */
+document.addEventListener("click", function () {
+    music.play().catch(() => {});
+}, { once: true });
+
+/* YES */
+yesBtn.addEventListener("click", function () {
+    message.style.display = "block";
+    createConfetti();
+});
+
+/* NO runs */
+noBtn.addEventListener("mouseover", function () {
+    noBtn.style.position = "absolute";
+    noBtn.style.top = Math.random() * window.innerHeight + "px";
+    noBtn.style.left = Math.random() * window.innerWidth + "px";
+
+    yesScale += 0.2;
+    yesBtn.style.transform = "scale(" + yesScale + ")";
+});
+
+/* Hearts */
+function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 15 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 500);
+
+/* Confetti */
+function createConfetti() {
+    for (let i = 0; i < 150; i++) {
+        const confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.backgroundColor =
+            "hsl(" + Math.random() * 360 + ", 100%, 50%)";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 3000);
+    }
+}
+
+</script>
+
+</body>
+</html>
